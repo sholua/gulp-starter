@@ -1,33 +1,15 @@
-const { src, dest, watch, series, parallel } = require("gulp");
+const { watch, series, parallel } = require("gulp");
 
 // Plugins
-const plumber = require("gulp-plumber");
-const notify = require("gulp-notify");
-const fileInclude = require("gulp-file-include");
 const browserSync = require("browser-sync").create();
-const del = require("del");
 
-// HTML processing
-const html = () => {
-  return src("./src/html/*.html")
-    .pipe(
-      plumber({
-        errorHandler: notify.onError(),
-      })
-    )
-    .pipe(fileInclude())
-    .pipe(dest("./public"))
-    .pipe(browserSync.stream());
-};
+// Tasks
+const html = require("./tasks/html");
+const clear = require("./tasks/clear");
 
 // Watcher
 const watcher = () => {
-  watch("./src/html/*.html", html);
-};
-
-// Cleaner
-const clean = () => {
-  return del("./public");
+  watch("./src/html/*.html", html).on("all", browserSync.reload);
 };
 
 // Server
@@ -42,5 +24,6 @@ const server = () => {
 // Takss
 exports.html = html;
 exports.watch = watcher;
+exports.clear = clear;
 
-exports.dev = series(clean, html, parallel(watcher, server));
+exports.dev = series(clear, html, parallel(watcher, server));
