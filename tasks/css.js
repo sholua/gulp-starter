@@ -11,6 +11,7 @@ const rename = require("gulp-rename");
 const size = require("gulp-size");
 const shorthand = require("gulp-shorthand");
 const groupCssMediaQueries = require("gulp-group-css-media-queries");
+const webpCss = require("gulp-webp-css");
 
 const css = () => {
   return src(paths.css.src, { sourcemaps: true })
@@ -25,6 +26,7 @@ const css = () => {
     .pipe(concat("main.css"))
     .pipe(shorthand())
     .pipe(groupCssMediaQueries())
+    .pipe(webpCss())
     .pipe(autoprefixer())
     .pipe(dest(paths.css.dest, { sourcemaps: true }))
     .pipe(rename({ suffix: ".min" }))

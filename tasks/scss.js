@@ -11,6 +11,7 @@ const size = require("gulp-size");
 const shorthand = require("gulp-shorthand");
 const groupCssMediaQueries = require("gulp-group-css-media-queries");
 const sass = require("gulp-sass")(require("sass"));
+const webpCss = require("gulp-webp-css");
 
 const scss = () => {
   return src(paths.scss.src, { sourcemaps: true })
@@ -23,6 +24,7 @@ const scss = () => {
       })
     )
     .pipe(sass())
+    .pipe(webpCss())
     .pipe(shorthand())
     .pipe(groupCssMediaQueries())
     .pipe(autoprefixer())

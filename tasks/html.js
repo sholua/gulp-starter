@@ -4,6 +4,7 @@ const paths = require("../config/paths");
 const plumber = require("gulp-plumber");
 const notify = require("gulp-notify");
 const fileInclude = require("gulp-file-include");
+const webpHtml = require("gulp-webp-html");
 
 const html = () => {
   return src(paths.html.src)
@@ -16,6 +17,7 @@ const html = () => {
       })
     )
     .pipe(fileInclude())
+    .pipe(webpHtml())
     .pipe(dest(paths.html.dest));
 };
 
