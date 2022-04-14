@@ -16,7 +16,10 @@ const scss = () => {
   return src(paths.scss.src, { sourcemaps: true })
     .pipe(
       plumber({
-        errorHandler: notify.onError(),
+        errorHandler: notify.onError((error) => ({
+          title: "SCSS",
+          message: error.message,
+        })),
       })
     )
     .pipe(sass())

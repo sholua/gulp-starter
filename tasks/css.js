@@ -16,7 +16,10 @@ const css = () => {
   return src(paths.css.src, { sourcemaps: true })
     .pipe(
       plumber({
-        errorHandler: notify.onError(),
+        errorHandler: notify.onError((error) => ({
+          title: "CSS",
+          message: error.message,
+        })),
       })
     )
     .pipe(concat("main.css"))

@@ -9,7 +9,10 @@ const html = () => {
   return src(paths.html.src)
     .pipe(
       plumber({
-        errorHandler: notify.onError(),
+        errorHandler: notify.onError((error) => ({
+          title: "HTML",
+          message: error.message,
+        })),
       })
     )
     .pipe(fileInclude())

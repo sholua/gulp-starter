@@ -5,22 +5,22 @@ const paths = require("../config/paths");
 // Plugins
 const plumber = require("gulp-plumber");
 const notify = require("gulp-notify");
-const babel = require("gulp-babel");
-const webpack = require("webpack-stream");
+const imagemin = require("gulp-imagemin");
+const newer = require("gulp-newer");
 
-const js = () => {
-  return src(paths.js.src, { sourcemaps: true })
+const img = () => {
+  return src(paths.img.src)
     .pipe(
       plumber({
         errorHandler: notify.onError((error) => ({
-          title: "JS",
+          title: "Image",
           message: error.message,
         })),
       })
     )
-    .pipe(babel())
-    .pipe(webpack(app.webpack))
-    .pipe(dest(paths.js.dest, { sourcemaps: true }));
+    .pipe(newer(paths.img.dest))
+    .pipe(imagemin(app.imagemin))
+    .pipe(dest(paths.img.dest));
 };
 
-module.exports = js;
+module.exports = img;
