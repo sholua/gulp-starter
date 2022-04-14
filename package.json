@@ -36,6 +36,8 @@
     "gulp-shorthand": "^1.1.0",
     "gulp-size": "^4.0.1",
     "gulp-uglify": "^3.0.2",
-    "sass": "^1.50.0"
+    "sass": "^1.50.0",
+    "webpack": "^5.72.0",
+    "webpack-stream": "^7.0.0"
   }
 }

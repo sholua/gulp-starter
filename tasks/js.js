@@ -5,7 +5,7 @@ const paths = require("../config/paths");
 const plumber = require("gulp-plumber");
 const notify = require("gulp-notify");
 const babel = require("gulp-babel");
-const uglify = require("gulp-uglify");
+const webpack = require("webpack-stream");
 
 const js = () => {
   return src(paths.js.src, { sourcemaps: true })
@@ -15,7 +15,11 @@ const js = () => {
       })
     )
     .pipe(babel())
-    .pipe(uglify())
+    .pipe(
+      webpack({
+        mode: "development",
+      })
+    )
     .pipe(dest(paths.js.dest, { sourcemaps: true }));
 };
 
