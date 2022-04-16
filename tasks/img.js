@@ -10,22 +10,24 @@ const newer = require("gulp-newer");
 const webp = require("gulp-webp");
 const gulpIf = require("gulp-if");
 
+const gp = require("gulp-load-plugins")();
+
 const img = () => {
   return src(paths.img.src)
     .pipe(
-      plumber({
-        errorHandler: notify.onError((error) => ({
+      gp.plumber({
+        errorHandler: gp.notify.onError((error) => ({
           title: "Image",
           message: error.message,
         })),
       })
     )
-    .pipe(newer(paths.img.dest))
-    .pipe(webp())
+    .pipe(gp.newer(paths.img.dest))
+    .pipe(gp.webp())
     .pipe(dest(paths.img.dest))
     .pipe(src(paths.img.src))
-    .pipe(newer(paths.img.dest))
-    .pipe(gulpIf(app.isProd, imagemin(app.imagemin)))
+    .pipe(gp.newer(paths.img.dest))
+    .pipe(gp.gulpIf(app.isProd, gp.imagemin(app.imagemin)))
     .pipe(dest(paths.img.dest));
 };
 

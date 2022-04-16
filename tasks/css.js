@@ -3,37 +3,28 @@ const app = require("../config/app");
 const paths = require("../config/paths");
 
 // Plugins
-const plumber = require("gulp-plumber");
-const notify = require("gulp-notify");
-const concat = require("gulp-concat");
-const autoprefixer = require("gulp-autoprefixer");
-const csso = require("gulp-csso");
-const rename = require("gulp-rename");
-const size = require("gulp-size");
-const shorthand = require("gulp-shorthand");
-const groupCssMediaQueries = require("gulp-group-css-media-queries");
-const webpCss = require("gulp-webp-css");
+const gp = require("gulp-load-plugins")();
 
 const css = () => {
-  return src(paths.css.src, { sourcemaps: true })
+  return src(paths.css.src, { sourcemaps: app.isDev })
     .pipe(
-      plumber({
-        errorHandler: notify.onError((error) => ({
+      gp.plumber({
+        errorHandler: gp.notify.onError((error) => ({
           title: "CSS",
           message: error.message,
         })),
       })
     )
-    .pipe(concat("main.css"))
-    .pipe(shorthand())
-    .pipe(groupCssMediaQueries())
-    .pipe(webpCss())
-    .pipe(autoprefixer())
+    .pipe(gp.concat("main.css"))
+    .pipe(gp.shorthand())
+    .pipe(gp.groupCssMediaQueries())
+    .pipe(gp.webpCss())
+    .pipe(gp.autoprefixer())
     .pipe(dest(paths.css.dest, { sourcemaps: app.isDev }))
-    .pipe(rename({ suffix: ".min" }))
-    .pipe(size({ title: "main.css" }))
-    .pipe(csso())
-    .pipe(size({ title: "main.min.css" }))
+    .pipe(gp.rename({ suffix: ".min" }))
+    .pipe(gp.size({ title: "main.css" }))
+    .pipe(gp.csso())
+    .pipe(gp.size({ title: "main.min.css" }))
     .pipe(dest(paths.css.dest, { sourcemaps: app.isDev }));
 };
 
