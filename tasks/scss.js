@@ -19,7 +19,8 @@ const scss = () => {
     .pipe($.gp.size({ title: "main.css" }))
     .pipe($.gp.csso())
     .pipe($.gp.size({ title: "main.min.css" }))
-    .pipe($.gulp.dest($.paths.scss.dest, { sourcemaps: $.app.isDev }));
+    .pipe($.gulp.dest($.paths.scss.dest, { sourcemaps: $.app.isDev }))
+    .pipe($.browserSync.stream());
 };
 
 module.exports = scss;

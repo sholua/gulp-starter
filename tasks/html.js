@@ -11,7 +11,8 @@ const html = () => {
     )
     .pipe($.gp.fileInclude())
     .pipe($.gp.webpHtml())
-    .pipe($.gulp.dest($.paths.html.dest));
+    .pipe($.gulp.dest($.paths.html.dest))
+    .pipe($.browserSync.stream());
 };
 
 module.exports = html;

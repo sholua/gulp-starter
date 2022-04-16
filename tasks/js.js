@@ -11,7 +11,8 @@ const js = () => {
     )
     .pipe($.gp.babel())
     .pipe($.webpack($.app.webpack))
-    .pipe($.gulp.dest($.paths.js.dest, { sourcemaps: $.app.isDev }));
+    .pipe($.gulp.dest($.paths.js.dest, { sourcemaps: $.app.isDev }))
+    .pipe($.browserSync.stream());
 };
 
 module.exports = js;

@@ -44,6 +44,7 @@
     "gulp-webp": "^4.0.1",
     "gulp-webp-css": "^1.1.0",
     "gulp-webp-html": "^1.0.2",
+    "require-dir": "^1.2.0",
     "sass": "^1.50.0",
     "webpack": "^5.72.0",
     "webpack-stream": "^7.0.0"

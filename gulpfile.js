@@ -16,38 +16,34 @@ global.$ = {
 };
 
 // Tasks
-const html = require("./tasks/html");
-const clear = require("./tasks/clear");
-const scss = require("./tasks/scss");
-const js = require("./tasks/js");
-const img = require("./tasks/img");
+const tasks = require("require-dir")("./tasks", { recurse: true });
+// const server = require("./tasks/server");
+// const html = require("./tasks/html");
+// const clear = require("./tasks/clear");
+// const scss = require("./tasks/scss");
+// const js = require("./tasks/js");
+// const img = require("./tasks/img");
 
 // Watcher
 const watcher = () => {
-  $.gulp.watch($.paths.html.watch, html).on("all", $.browserSync.reload);
-  $.gulp.watch($.paths.scss.watch, scss).on("all", $.browserSync.reload);
-  $.gulp.watch($.paths.js.watch, js).on("all", $.browserSync.reload);
-  $.gulp.watch($.paths.img.watch, img).on("all", $.browserSync.reload);
-};
-
-// Server
-const server = () => {
-  $.browserSync.init({
-    server: {
-      baseDir: $.paths.root,
-    },
-  });
+  $.gulp.watch($.paths.html.watch, tasks.html);
+  $.gulp.watch($.paths.scss.watch, tasks.scss);
+  $.gulp.watch($.paths.js.watch, tasks.js);
+  $.gulp.watch($.paths.img.watch, tasks.img);
 };
 
 // Tasks
-exports.html = html;
-exports.clear = clear;
-exports.scss = scss;
-exports.js = js;
-exports.img = img;
+exports.clear = tasks.clear;
+exports.html = tasks.html;
+exports.scss = tasks.scss;
+exports.js = tasks.js;
+exports.img = tasks.img;
 
-const build = $.gulp.series(clear, $.gulp.parallel(html, scss, js, img));
+const build = $.gulp.series(
+  tasks.clear,
+  $.gulp.parallel(tasks.html, tasks.scss, tasks.js, tasks.img)
+);
 
-const dev = $.gulp.series(build, $.gulp.parallel(watcher, server));
+const dev = $.gulp.series(build, $.gulp.parallel(watcher, tasks.server));
 
 exports.default = $.app.isProd ? build : dev;
