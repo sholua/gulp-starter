@@ -8,6 +8,7 @@ const notify = require("gulp-notify");
 const imagemin = require("gulp-imagemin");
 const newer = require("gulp-newer");
 const webp = require("gulp-webp");
+const gulpIf = require("gulp-if");
 
 const img = () => {
   return src(paths.img.src)
@@ -24,7 +25,7 @@ const img = () => {
     .pipe(dest(paths.img.dest))
     .pipe(src(paths.img.src))
     .pipe(newer(paths.img.dest))
-    .pipe(imagemin(app.imagemin))
+    .pipe(gulpIf(app.isProd, imagemin(app.imagemin)))
     .pipe(dest(paths.img.dest));
 };
 

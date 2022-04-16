@@ -9,7 +9,7 @@ const babel = require("gulp-babel");
 const webpack = require("webpack-stream");
 
 const js = () => {
-  return src(paths.js.src, { sourcemaps: true })
+  return src(paths.js.src, { sourcemaps: app.isDev })
     .pipe(
       plumber({
         errorHandler: notify.onError((error) => ({
@@ -20,7 +20,7 @@ const js = () => {
     )
     .pipe(babel())
     .pipe(webpack(app.webpack))
-    .pipe(dest(paths.js.dest, { sourcemaps: true }));
+    .pipe(dest(paths.js.dest, { sourcemaps: app.isDev }));
 };
 
 module.exports = js;

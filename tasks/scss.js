@@ -1,4 +1,5 @@
 const { src, dest } = require("gulp");
+const app = require("../config/app");
 const paths = require("../config/paths");
 
 // Plugins
@@ -14,7 +15,7 @@ const sass = require("gulp-sass")(require("sass"));
 const webpCss = require("gulp-webp-css");
 
 const scss = () => {
-  return src(paths.scss.src, { sourcemaps: true })
+  return src(paths.scss.src, { sourcemaps: app.isDev })
     .pipe(
       plumber({
         errorHandler: notify.onError((error) => ({
@@ -28,12 +29,12 @@ const scss = () => {
     .pipe(shorthand())
     .pipe(groupCssMediaQueries())
     .pipe(autoprefixer())
-    .pipe(dest(paths.scss.dest, { sourcemaps: true }))
+    .pipe(dest(paths.scss.dest, { sourcemaps: app.isDev }))
     .pipe(rename({ suffix: ".min" }))
     .pipe(size({ title: "main.css" }))
     .pipe(csso())
     .pipe(size({ title: "main.min.css" }))
-    .pipe(dest(paths.scss.dest, { sourcemaps: true }));
+    .pipe(dest(paths.scss.dest, { sourcemaps: app.isDev }));
 };
 
 module.exports = scss;

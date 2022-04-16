@@ -1,4 +1,5 @@
 const { src, dest } = require("gulp");
+const app = require("../config/app");
 const paths = require("../config/paths");
 
 // Plugins
@@ -28,12 +29,12 @@ const css = () => {
     .pipe(groupCssMediaQueries())
     .pipe(webpCss())
     .pipe(autoprefixer())
-    .pipe(dest(paths.css.dest, { sourcemaps: true }))
+    .pipe(dest(paths.css.dest, { sourcemaps: app.isDev }))
     .pipe(rename({ suffix: ".min" }))
     .pipe(size({ title: "main.css" }))
     .pipe(csso())
     .pipe(size({ title: "main.min.css" }))
-    .pipe(dest(paths.css.dest, { sourcemaps: true }));
+    .pipe(dest(paths.css.dest, { sourcemaps: app.isDev }));
 };
 
 module.exports = css;

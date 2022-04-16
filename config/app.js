@@ -1,6 +1,11 @@
+const isProd = process.argv.includes("--production");
+
 module.exports = {
+  isProd,
+  isDev: !isProd,
+
   webpack: {
-    mode: "production",
+    mode: isProd ? "production" : "development",
   },
 
   imagemin: {

@@ -1,5 +1,6 @@
 const { watch, series, parallel } = require("gulp");
 
+const app = require("./config/app");
 const paths = require("./config/paths");
 
 // Plugins
@@ -12,7 +13,7 @@ const scss = require("./tasks/scss");
 const js = require("./tasks/js");
 const img = require("./tasks/img");
 
-// Watcher    .pipe(concat("main.css"))
+// Watcher
 const watcher = () => {
   watch(paths.html.watch, html).on("all", browserSync.reload);
   watch(paths.scss.watch, scss).on("all", browserSync.reload);
@@ -36,8 +37,8 @@ exports.scss = scss;
 exports.js = js;
 exports.img = img;
 
-exports.dev = series(
-  clear,
-  parallel(html, scss, js, img),
-  parallel(watcher, server)
-);
+const build = series(clear, parallel(html, scss, js, img));
+
+const dev = series(build, parallel(watcher, server));
+
+exports.default = app.isProd ? build : dev;
