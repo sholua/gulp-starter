@@ -11,6 +11,7 @@ const html = () => {
     )
     .pipe($.gp.fileInclude())
     .pipe($.gp.webpHtml())
+    .pipe($.gp.prettier())
     .pipe($.gulp.dest($.paths.html.dest))
     .pipe($.browserSync.stream());
 };
